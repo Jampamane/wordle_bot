@@ -1,2 +1,2 @@
-for indx in range(1, 6):
-    print(indx)
+thisa = {3: 5}
+print(thisa)

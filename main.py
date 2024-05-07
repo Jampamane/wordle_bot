@@ -1,25 +1,11 @@
-from wordle import Wordle
+import time
 from multiprocessing import Process
+from wordle import Wordle
+from multi_process_wordle import PlaySixteen
 
 
 def main():
-    wordle = Wordle()
-    wordle.solve()
-
+    PlaySixteen(number_of_times=1)
 
 if __name__ == "__main__":
     main()
-    '''
-    one = Process(target=main)
-    two = Process(target=main)
-    three = Process(target=main)
-    four = Process(target=main)
-    one.start()
-    two.start()
-    three.start()
-    four.start()
-    one.join()
-    two.join()
-    three.join()
-    four.join()
-    '''
