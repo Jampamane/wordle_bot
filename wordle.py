@@ -46,7 +46,7 @@ class Wordle():
         options = Options()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         options.add_argument('--log-level=3')
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--ignore-ssl-errors')
         self.browser = Chrome(options=options)
@@ -85,19 +85,33 @@ class Wordle():
                 return False
         return True
 
+    def is_letter_duplicate(self, letter, word):
+        count = 0
+        for l in word:
+            if l == letter:
+                count += 1
+        if count > 1:
+            return True
+        return False
 
-    def update_wordle(self, row_number: int) -> None:
+    def update_wordle(self, row_number: int, word: str) -> None:
         row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[row_number - 1]
         tiles = row.find_elements(By.CLASS_NAME, self.TILE_CLASS)
         for indx, letter in enumerate(tiles, start=1):
+            duplicate_check = self.is_letter_duplicate(letter=letter.text.lower(), word=word)
             letter_check = letter.get_attribute("data-state")
             if letter_check == "absent":
-                self.wordle["absent_letters"].append(letter.text.lower())
+                if duplicate_check is True:
+                    self.wordle["letters"][indx]["incorrect"].append(letter.text.lower())
+                else:
+                    self.wordle["absent_letters"].append(letter.text.lower())
             elif letter_check == "correct":
                 self.wordle["letters"][indx]["correct"] = letter.text.lower()
+                self.wordle["present_letters"].append(letter.text.lower())
             elif letter_check == "present":
                 self.wordle["present_letters"].append(letter.text.lower())
                 self.wordle["letters"][indx]["incorrect"].append(letter.text.lower())
+
 
 
     def update_table(self, row_number: int):
@@ -125,10 +139,20 @@ class Wordle():
         )
         self.table.add_section()
 
+    def check_for_present_letters(self, word):
+        if self.wordle['present_letters']:
+            for present_letter in self.wordle['present_letters']:
+                if present_letter not in word:
+                    return False
+        return True
+
 
     def get_potential_words(self):
         potential_words = {}
         for word in self.potential_words.keys():
+            if self.check_for_present_letters(word) is False:
+                continue
+
             for indx, letter in enumerate(word, start=1):
                 if letter in self.wordle['absent_letters']:
                     break
@@ -139,15 +163,9 @@ class Wordle():
                     pass
                 elif letter != self.wordle['letters'][indx]['correct']:
                     break
+
                 if indx == 5:
-                    if self.wordle['present_letters']:
-                        for i, present_letter in enumerate(self.wordle['present_letters'], start=1):
-                            if present_letter not in word:
-                                break
-                            if len(self.wordle['present_letters']) == i:
-                                potential_words[word] = 1
-                    else:
-                        potential_words[word] = 1
+                    potential_words[word] = 1
         return potential_words
 
 
@@ -176,7 +194,7 @@ class Wordle():
         with Live(self.table) as live:
             if self.submit_guess(guess=first_guess, row_number=1) is False:
                 raise ValueError("You have provided an invalid first guess.")
-            self.update_wordle(row_number=1)
+            self.update_wordle(row_number=1, word=first_guess)
             self.update_table(row_number=1)
             live.update(self.table)
             for indx in range(2, 7):
@@ -190,7 +208,7 @@ class Wordle():
                     self.delete_guess(new_guess)  
                     new_guess = random.choice(list(self.potential_words.keys()))
                     print(new_guess)
-                self.update_wordle(row_number=indx)
+                self.update_wordle(row_number=indx, word=new_guess)
                 self.update_table(row_number=indx)
                 live.update(self.table)
 
@@ -235,7 +253,7 @@ class Wordle():
          with Live(self.table) as live:
             if self.submit_guess(guess=first_guess, row_number=1) is False:
                 raise ValueError("You have provided an invalid first guess.")
-            self.update_wordle(row_number=1)
+            self.update_wordle(row_number=1, word=first_guess)
             self.update_table(row_number=1)
             live.update(self.table)
             for indx in range(2, 7):
@@ -249,7 +267,7 @@ class Wordle():
                     self.delete_guess(new_guess)  
                     new_guess = self._easy_mode_get_guess()
                     print(new_guess)
-                self.update_wordle(row_number=indx)
+                self.update_wordle(row_number=indx, word=new_guess)
                 self.update_table(row_number=indx)
                 live.update(self.table)
     
