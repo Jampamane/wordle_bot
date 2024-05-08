@@ -30,7 +30,7 @@ class Wordle():
     FIVE_LETTER_WORDS_ABSOLUTE_PATH = os.path.join(ABSOLUTE_PATH, FIVE_LETTER_WORDS_RELATIVE_PATH)
 
 
-    def __init__(self, x=None, y=None, height=None, width=None) -> None:
+    def __init__(self, x=None, y=None, height=None, width=None, headless=False) -> None:
         with open(self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, 'r') as file:
             self.five_letter_words = json.load(file)
         self.potential_words = self.five_letter_words
@@ -46,11 +46,9 @@ class Wordle():
             "present_letters": []}
         self.table = self._build_table()
         options = Options()
-        options.add_experimental_option('excludeSwitches', ['enable-logging'])
         options.add_argument('--log-level=3')
-        # options.add_argument('--headless')
-        options.add_argument('--ignore-certificate-errors')
-        options.add_argument('--ignore-ssl-errors')
+        if headless is not False:
+            options.add_argument('--headless')
         self.browser = Chrome(options=options)
         self.action_chains = ActionChains(self.browser)
 
@@ -70,6 +68,15 @@ class Wordle():
 
         last_row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[5]
         self.action_chains.scroll_to_element(last_row).perform()
+
+    @property
+    def wordle_today(self):
+        return str(
+            self.wordle['letters'][1]['correct'] +
+            self.wordle['letters'][2]['correct'] +
+            self.wordle['letters'][3]['correct'] +
+            self.wordle['letters'][4]['correct'] +
+            self.wordle['letters'][5]['correct'])
 
     def _build_table(self) -> Table:
         table = Table(title="Wordle")
@@ -184,13 +191,8 @@ class Wordle():
         for indx in range(1, 6):
             if not self.wordle['letters'][indx]['correct']:
                 return False
-        wordle = str(
-            self.wordle['letters'][1]['correct'] +
-            self.wordle['letters'][2]['correct'] +
-            self.wordle['letters'][3]['correct'] +
-            self.wordle['letters'][4]['correct'] +
-            self.wordle['letters'][5]['correct'])
-        if check_word != wordle:
+            
+        if check_word != self.wordle_today:
             return False
         return True
 
