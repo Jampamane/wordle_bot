@@ -99,9 +99,12 @@ class Wordle():
                 }
             }
             options = Options()
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
             options.add_argument('--log-level=3')
-            if headless is not False:
+            if headless is True:
                 options.add_argument('--headless')
+            options.add_argument('--ignore-certificate-errors')
+            options.add_argument('--ignore-ssl-errors')
             self.browser = Chrome(options=options)
             self.action_chains = ActionChains(self.browser)
 
@@ -207,16 +210,28 @@ class Wordle():
         return False
 
 
+    def _totally_absent(self, row_number: int, letter: str) -> bool:
+        row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[row_number - 1]
+        tiles = row.find_elements(By.CLASS_NAME, self.TILE_CLASS)
+        for l in tiles:
+            if l.text.lower() == letter:
+                if l.get_attribute("data-state") != "absent":
+                    return False
+        return True
+
+
     def _update_wordle(self, row_number: int, word: str) -> None:
         self.wordle["guess"][row_number]["word"] = word
         row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[row_number - 1]
         tiles = row.find_elements(By.CLASS_NAME, self.TILE_CLASS)
         for indx, letter in enumerate(tiles, start=1):
-            duplicate_check = self._is_letter_duplicate(letter=letter.text.lower(), word=word)
             letter_check = letter.get_attribute("data-state")
             if letter_check == "absent":
-                if duplicate_check is True:
-                    self.wordle["letters"][indx]["incorrect"].append(letter.text.lower())
+                if self._is_letter_duplicate(letter=letter.text.lower(), word=word) is True:
+                    if self._totally_absent(row_number=row_number, letter=letter.text.lower()) is False:
+                        self.wordle["letters"][indx]["incorrect"].append(letter.text.lower())
+                    else:
+                        self.wordle["absent_letters"].append(letter.text.lower())
                 else:
                     self.wordle["absent_letters"].append(letter.text.lower())
             elif letter_check == "correct":
