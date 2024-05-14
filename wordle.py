@@ -120,10 +120,12 @@ class Wordle():
 
     @property
     def wordle_today(self) -> str:
-        """_summary_
+        """
+        Grabs today's wordle from the Wordle Class's wordle dictionary.
+        Only works if wordle has been solved.
 
         Returns:
-            str: _description_
+            str: Today's wordle.
         """
         return str(
             self.wordle['letters'][1]['correct'] +
@@ -134,14 +136,18 @@ class Wordle():
 
 
     def build_table(self, guess="", style="yellow") -> Table:
-        """_summary_
+        """
+        Dynamically build the table in the console so 
+        the user can see how the wordle is being solved.
 
         Args:
-            guess (str, optional): _description_. Defaults to "".
-            style (str, optional): _description_. Defaults to "yellow".
+            guess (str, optional): 
+                The 5 letter word that is being guessed. Defaults to "".
+            style (str, optional): 
+                The color that the guess will be displayed as. Defaults to "yellow".
 
         Returns:
-            Table: _description_
+            Table: Table object for displaying wordle.
         """
         print_guess = False
         table = Table(title="Wordle")
@@ -303,7 +309,7 @@ class Wordle():
         if len(self.potential_words) == 1 or len(availible_letters) == 0:
             best_guess = list(self.potential_words.keys())[0]
             return best_guess
-        
+
         if len(self.potential_words) == 2:
             best_guess = random.choice(list(self.potential_words.keys()))
             return best_guess
@@ -340,16 +346,19 @@ class Wordle():
 
 
     def solve(self, first_guess: str="") -> bool:
-        """_summary_
+        """Solve the wordle by selecting random 'best guesses'.
 
         Args:
-            first_guess (str, optional): _description_. Defaults to "".
+            first_guess (str, optional):
+                The first guess the wordle solver will use.
+                If blank, will just pick a random word. Defaults to "".
 
         Raises:
-            ValueError: _description_
+            ValueError: 
+                Will raise a ValueError if provided an invalid first guess.
 
         Returns:
-            bool: _description_
+            bool: Will return True if successfull and False if not.
         """
         with Live(self.build_table()) as live:
             if first_guess:
