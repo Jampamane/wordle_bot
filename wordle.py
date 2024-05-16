@@ -360,6 +360,23 @@ class Wordle():
             By.CLASS_NAME, self.CLOSE_POPUP_CLASS))).click()
 
 
+    def process_words(self, word_list: dict, indx: int):
+        console = Console()
+        row_number = 1
+        while True:
+            if self._submit_guess(guess=word_list[indx], row_number=row_number) is False:
+                console.print(word_list[indx], style="red bold")
+                self._delete_guess(word_list[indx])
+                indx += 1
+            else:
+                console.print(word_list[indx], style="green bold")
+                row_number += 1
+                indx += 1
+                if row_number == 7:
+                    return (indx)
+            
+
+
     def solve(self, first_guess: str="") -> bool:
         """Solve the wordle by selecting random 'best guesses'.
 
