@@ -153,13 +153,13 @@ class Wordle():
             Table: Table object for displaying wordle.
         """
         print_guess = False
-        table = Table(title="Wordle")
-        table.add_column("Guess", justify="center")
-        table.add_column("1")
-        table.add_column("2")
-        table.add_column("3")
-        table.add_column("4")
-        table.add_column("5")
+        table = Table(title="Wordle", show_header=False)
+        table.add_column("Guess", width=5, justify="center")
+        table.add_column("1", width=1, justify="center")
+        table.add_column("2", width=1, justify="center")
+        table.add_column("3", width=1, justify="center")
+        table.add_column("4", width=1, justify="center")
+        table.add_column("5", width=1, justify="center")
         for x in range(1, 7):
             if self.wordle["guess"][x]["letters"]:
                 table.add_row(
@@ -358,23 +358,6 @@ class Wordle():
         WebDriverWait(self.browser, 5).until(
         EC.presence_of_element_located((
             By.CLASS_NAME, self.CLOSE_POPUP_CLASS))).click()
-
-
-    def process_words(self, word_list: dict, indx: int):
-        console = Console()
-        row_number = 1
-        while True:
-            if self._submit_guess(guess=word_list[indx], row_number=row_number) is False:
-                console.print(word_list[indx], style="red bold")
-                self._delete_guess(word_list[indx])
-                indx += 1
-            else:
-                console.print(word_list[indx], style="green bold")
-                row_number += 1
-                indx += 1
-                if row_number == 7:
-                    return (indx)
-            
 
 
     def solve(self, first_guess: str="") -> bool:
