@@ -7,6 +7,8 @@ import os
 from rich.live import Live
 from rich.table import Table
 from rich.console import Console
+from rich.layout import Layout
+from rich.panel import Panel
 
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
@@ -47,7 +49,7 @@ class Wordle():
     FIVE_LETTER_WORDS_ABSOLUTE_PATH = os.path.join(ABSOLUTE_PATH, FIVE_LETTER_WORDS_RELATIVE_PATH)
 
 
-    def __init__(self, headless=False) -> None:
+    def __init__(self, headless: bool = False) -> None:
         console = Console()
         with console.status(
             "Setting up Wordle..."
@@ -55,6 +57,8 @@ class Wordle():
             with open(self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, 'r', encoding="utf-8") as file:
                 self.five_letter_words = json.load(file)
             self.potential_words = self.five_letter_words
+            self.potential_letters = ["a", "b", "c", "d", "e", "f", "g" ,"h", "i", "j", "k", "l", "m",
+                                      "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
             self.style_dict = {
                 "absent": "grey53",
                 "present": "yellow bold",
@@ -152,6 +156,7 @@ class Wordle():
         Returns:
             Table: Table object for displaying wordle.
         """
+        
         print_guess = False
         table = Table(title="Wordle", show_header=False)
         table.add_column("Guess", width=5, justify="center")
@@ -181,10 +186,42 @@ class Wordle():
             else:
                 table.add_row(str(x), style="cyan")
                 table.add_section()
-        return table
+
+        letters = Table(show_header=False, show_lines=False, show_edge=False)
+        letters.add_row(str(self.potential_letters))
+        words = Table(show_header=False, show_lines=False, show_edge=False)
+        words.add_row(str(list(self.potential_words.keys())))
+
+        layout = Layout()
+        layout.split_row(
+            Layout(name="table"),
+            Layout(name="info")
+        )
+        layout["info"].split_column(
+            Layout(name="letters"),
+            Layout(name="words")
+        )
+        layout["table"].size = 33
+        layout["letters"].size = 3
+        layout["table"].update(Panel(table))
+        layout["letters"].update(Panel(letters))
+        layout["words"].update(Panel(words))
+        return layout
 
 
     def _submit_guess(self, guess: str, row_number: int) -> bool:
+        """Submits the guess to NYT Wordle.
+
+        Args:
+            guess (str):
+                Guess to submit.
+            row_number (int):
+                Row number the guess is being submitted to.
+                Used for validating if the guess was successful or not.
+
+        Returns:
+            bool: True or False based on if guess was successfully submitted.
+        """
         for letter in guess:
             self.action_chains.send_keys(letter).perform()
             time.sleep(0.1)
@@ -200,7 +237,16 @@ class Wordle():
         return True
 
 
-    def _is_letter_duplicate(self, letter, word):
+    def _is_letter_duplicate(self, letter: str, word: str) -> bool:
+        """Checks if a given letter shows up more than once in a word.
+
+        Args:
+            letter (str): Letter to check for duplicate.
+            word (str): Word to check letter duplicate.
+
+        Returns:
+            bool: True if duplicate, False if otherwise.
+        """
         count = 0
         for l in word:
             if l == letter:
@@ -314,10 +360,25 @@ class Wordle():
                 availible_letters.pop(self.wordle["letters"][indx]["correct"])
             except KeyError:
                 pass
+        self.potential_letters = list(availible_letters.keys())
         return availible_letters
 
 
-    def _get_best_guess(self, score=5):
+    def _get_best_guess(self, score: int = 5) -> str:
+        """
+        Generates a list of best guesses based on the remaining 
+        letters from the list of potential remaining words.
+
+        Args:
+            score (int, optional):
+                Defaults to 5. Used in recusion. If function can't find a word that
+                includes 5 unique letters from the list of potential letters
+                then it will call the function again with a score of -= 1.
+
+        Returns:
+            guess (str):
+                Random guess for the list of potential guesses. 
+        """
         best_guesses = []
         availible_letters = self._get_available_letters()
 
@@ -350,7 +411,8 @@ class Wordle():
         return guess
 
 
-    def _close_popups(self):
+    def _close_popups(self) -> None:
+        """Closes the popups when done solving the Wordle."""
         WebDriverWait(self.browser, 5).until(
         EC.presence_of_element_located((
             By.CLASS_NAME, self.CLOSE_POPUP_CLASS))).click()
@@ -373,7 +435,7 @@ class Wordle():
                 Will raise a ValueError if provided an invalid first guess.
 
         Returns:
-            bool: Will return True if successfull and False if not.
+            bool: True if successfully solved, False if otherwise.
         """
         with Live(self.build_table()) as live:
             if first_guess:
