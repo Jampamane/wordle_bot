@@ -50,8 +50,8 @@ class Wordle():
 
 
     def __init__(self, headless: bool = False) -> None:
-        console = Console()
-        with console.status(
+        self.console = Console()
+        with self.console.status(
             "Setting up Wordle..."
         ):
             with open(self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, 'r', encoding="utf-8") as file:
@@ -188,8 +188,10 @@ class Wordle():
                 table.add_section()
 
         letters = Table(show_header=False, show_lines=False, show_edge=False)
-        letters.add_row(str(self.potential_letters))
+        letters.add_row(f"Total potential words: [cyan bold]{len(self.potential_words.keys())}")
         words = Table(show_header=False, show_lines=False, show_edge=False)
+        words.add_row(str(self.potential_letters))
+        words.add_section()
         words.add_row(str(list(self.potential_words.keys())))
 
         layout = Layout()
@@ -468,10 +470,11 @@ class Wordle():
                 self._update_wordle(row_number=indx, word=new_guess)
                 live.update(self.build_table())
                 if self._check_for_win(new_guess) is True:
-                    self._close_popups()
-                    return True
+                    break
 
         self._close_popups()
         if self._check_for_win(new_guess) is True:
+            self.console.print(f"Today's wordle is: [green bold]{self.wordle_today.upper()}", justify="center")
             return True
+        self.console.print("Looks like the bot failed wordle today...", justify="center")
         return False
