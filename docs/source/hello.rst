@@ -5,3 +5,5 @@ Short and stout
 ---------------
 
 .. image:: 20180529_121328~2.jpg
+
+.. image:: j3x5jov4nt971.png
