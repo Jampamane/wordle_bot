@@ -12,10 +12,3 @@ Welcome to Wordle Bot's documentation!
    
    hello
 
-
-
-Indices and tables
-==================
-.. include::
-   Markdown/hello
-
