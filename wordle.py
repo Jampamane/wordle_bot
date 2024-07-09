@@ -479,35 +479,3 @@ class Wordle():
             return True
         self.console.print("Looks like the bot failed wordle today...", justify="center")
         return False
-
-    def build_final_table(self, guess="", style="yellow"):
-        print_guess = False
-        table = Table(title="Wordle", show_header=False)
-        table.add_column("Guess", width=5, justify="center")
-        table.add_column("1", width=1, justify="center")
-        table.add_column("2", width=1, justify="center")
-        table.add_column("3", width=1, justify="center")
-        table.add_column("4", width=1, justify="center")
-        table.add_column("5", width=1, justify="center")
-        for x in range(1, 7):
-            if self.wordle["guess"][x]["letters"]:
-                table.add_row(
-                    self.wordle['guess'][x]['word'].capitalize(),
-        f"[{self.wordle['guess'][x]['letters'][0][1]}]{self.wordle['guess'][x]['letters'][0][0]}",
-        f"[{self.wordle['guess'][x]['letters'][1][1]}]{self.wordle['guess'][x]['letters'][1][0]}",
-        f"[{self.wordle['guess'][x]['letters'][2][1]}]{self.wordle['guess'][x]['letters'][2][0]}",
-        f"[{self.wordle['guess'][x]['letters'][3][1]}]{self.wordle['guess'][x]['letters'][3][0]}",
-        f"[{self.wordle['guess'][x]['letters'][4][1]}]{self.wordle['guess'][x]['letters'][4][0]}"
-                )
-                table.add_section()
-            elif not guess:
-                table.add_row(str(x), style="cyan")
-                table.add_section()
-            elif print_guess is False:
-                print_guess = True
-                table.add_row(guess.capitalize(), style=style)
-                table.add_section()
-            else:
-                table.add_row(str(x), style="cyan")
-                table.add_section()
-        return table
