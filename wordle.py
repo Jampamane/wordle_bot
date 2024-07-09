@@ -143,9 +143,9 @@ class Wordle():
             self.wordle['letters'][5]['correct'])
 
 
-    def build_table(self, guess="", style="yellow") -> Table:
+    def build_layout(self, guess="", style="yellow") -> Layout:
         """
-        Dynamically build the table in the console so 
+        Dynamically build the layout in the console so 
         the user can see how the wordle is being solved.
 
         Args:
@@ -155,7 +155,7 @@ class Wordle():
                 The color that the guess will be displayed as. Defaults to "yellow".
 
         Returns:
-            Table: Table object for displaying wordle.
+            Layout: Layout object for displaying wordle.
         """
         
         print_guess = False
@@ -440,21 +440,21 @@ class Wordle():
         Returns:
             bool: True if successfully solved, False if otherwise.
         """
-        with Live(self.build_table()) as live:
+        with Live(self.build_layout()) as live:
             if first_guess:
-                live.update(self.build_table(guess=first_guess))
+                live.update(self.build_layout(guess=first_guess))
             if not first_guess:
                 first_guess = random.choice(list(self.potential_words.keys()))
-                live.update(self.build_table(guess=first_guess))
+                live.update(self.build_layout(guess=first_guess))
                 while self._submit_guess(guess=first_guess, row_number=1) is False:
-                    live.update(self.build_table(guess=first_guess, style="red bold"))
+                    live.update(self.build_layout(guess=first_guess, style="red bold"))
                     self._delete_guess(first_guess)
                     first_guess = random.choice(list(self.potential_words.keys()))
-                    live.update(self.build_table(guess=first_guess))
+                    live.update(self.build_layout(guess=first_guess))
             elif self._submit_guess(guess=first_guess, row_number=1) is False:
                 raise ValueError("You have provided an invalid first guess.")
             self._update_wordle(row_number=1, word=first_guess)
-            live.update(self.build_table())
+            live.update(self.build_layout())
             if self._check_for_win(first_guess) is True:
                 self._close_popups()
                 return True
@@ -462,14 +462,14 @@ class Wordle():
             for indx in range(2, 7):
                 self.potential_words = self._get_potential_words()
                 new_guess = self._get_best_guess()
-                live.update(self.build_table(guess=new_guess))
+                live.update(self.build_layout(guess=new_guess))
                 while self._submit_guess(guess=new_guess, row_number=indx) is False:
-                    live.update(self.build_table(guess=new_guess, style="red bold"))
+                    live.update(self.build_layout(guess=new_guess, style="red bold"))
                     self._delete_guess(new_guess)
                     new_guess = self._get_best_guess()
-                    live.update(self.build_table(guess=new_guess))
+                    live.update(self.build_layout(guess=new_guess))
                 self._update_wordle(row_number=indx, word=new_guess)
-                live.update(self.build_table())
+                live.update(self.build_layout())
                 if self._check_for_win(new_guess) is True:
                     break
 
@@ -479,3 +479,35 @@ class Wordle():
             return True
         self.console.print("Looks like the bot failed wordle today...", justify="center")
         return False
+
+    def build_final_table(self, guess="", style="yellow"):
+        print_guess = False
+        table = Table(title="Wordle", show_header=False)
+        table.add_column("Guess", width=5, justify="center")
+        table.add_column("1", width=1, justify="center")
+        table.add_column("2", width=1, justify="center")
+        table.add_column("3", width=1, justify="center")
+        table.add_column("4", width=1, justify="center")
+        table.add_column("5", width=1, justify="center")
+        for x in range(1, 7):
+            if self.wordle["guess"][x]["letters"]:
+                table.add_row(
+                    self.wordle['guess'][x]['word'].capitalize(),
+        f"[{self.wordle['guess'][x]['letters'][0][1]}]{self.wordle['guess'][x]['letters'][0][0]}",
+        f"[{self.wordle['guess'][x]['letters'][1][1]}]{self.wordle['guess'][x]['letters'][1][0]}",
+        f"[{self.wordle['guess'][x]['letters'][2][1]}]{self.wordle['guess'][x]['letters'][2][0]}",
+        f"[{self.wordle['guess'][x]['letters'][3][1]}]{self.wordle['guess'][x]['letters'][3][0]}",
+        f"[{self.wordle['guess'][x]['letters'][4][1]}]{self.wordle['guess'][x]['letters'][4][0]}"
+                )
+                table.add_section()
+            elif not guess:
+                table.add_row(str(x), style="cyan")
+                table.add_section()
+            elif print_guess is False:
+                print_guess = True
+                table.add_row(guess.capitalize(), style=style)
+                table.add_section()
+            else:
+                table.add_row(str(x), style="cyan")
+                table.add_section()
+        return table

@@ -7,8 +7,9 @@ Welcome to Wordle Bot's documentation!
 ======================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :hidden:
    
-   hello
+   about
+   final_table
+   documentation
 
