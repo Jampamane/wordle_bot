@@ -17,7 +17,8 @@ def main():
         final_table = Console(file=file)
         today = date.today()
         final_table.print(
-            f".. list-table:: Wordle for {today}\n"
+            ".. list-table:: Wordle for " + today + "\n" +
+            "   :widths: 10 3 3 3 3 3\n" +
             "   :header-rows: 0\n"
             )
         for x in range(1, 7):
