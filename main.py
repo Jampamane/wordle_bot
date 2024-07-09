@@ -24,11 +24,11 @@ def main():
             if not len(wordle.wordle["guess"][x]["word"]) == 0:
                 final_table.print(
                     "   * - " + wordle.wordle["guess"][x]["word"] + "\n" +
-                    "   - " + wordle.wordle["guess"][x]["letters"][0] + "\n" +
-                    "   - " + wordle.wordle["guess"][x]["letters"][1] + "\n" +
-                    "   - " + wordle.wordle["guess"][x]["letters"][2] + "\n" +
-                    "   - " + wordle.wordle["guess"][x]["letters"][3] + "\n" +
-                    "   - " + wordle.wordle["guess"][x]["letters"][4] + "\n"
+                    "   - " + wordle.wordle["guess"][x]["letters"][0][0] + "\n" +
+                    "   - " + wordle.wordle["guess"][x]["letters"][1][0] + "\n" +
+                    "   - " + wordle.wordle["guess"][x]["letters"][2][0] + "\n" +
+                    "   - " + wordle.wordle["guess"][x]["letters"][3][0] + "\n" +
+                    "   - " + wordle.wordle["guess"][x]["letters"][4][0] + "\n"
                 )
             else:
                 final_table.print(
