@@ -11,7 +11,8 @@ def output_file(wordle: Wordle):
         final_table.print(
             ".. list-table:: Wordle for " + str(today) + "\n" +
             "   :widths: 10 3 3 3 3 3\n" +
-            "   :header-rows: 0\n"
+            "   :header-rows: 0\n" +
+            "   :align: left\n"
             )
         for x in range(1, 7):
             if not len(wordle.wordle["guess"][x]["word"]) == 0:
