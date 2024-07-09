@@ -7,7 +7,7 @@ Welcome to Wordle Bot's documentation!
 ======================================
 
 .. toctree::
-   :hidden:
+   :caption: Contents:
    
    about
    final_table

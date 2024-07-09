@@ -13,10 +13,10 @@ def main():
 
     # Output to an rst file
     ABSOLUTE_PATH = os.path.dirname(__file__)
-    with open(os.path.join(ABSOLUTE_PATH, "docs/source/final_table.rst"), "w", encoding="utf-8") as file:
+    with open(os.path.join(ABSOLUTE_PATH, "docs/source/final_table.rst"), "a", encoding="utf-8") as file:
         final_table = Console(file=file)
         today = date.today()
-        final_table.print(f"Today's date: {today}")
+        final_table.print(f"Today's date: {today}\n")
         final_table.print(wordle.build_final_table())
         final_table.print(f"Today's wordle is: {wordle.wordle_today.upper()}")
 

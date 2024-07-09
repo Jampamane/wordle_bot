@@ -1,15 +1,5 @@
-           Wordle            
-┌───────┬───┬───┬───┬───┬───┐
-│ Iliac │ I │ L │ I │ A │ C │
-├───────┼───┼───┼───┼───┼───┤
-│ Mopey │ M │ O │ P │ E │ Y │
-├───────┼───┼───┼───┼───┼───┤
-│ Grubs │ G │ R │ U │ B │ S │
-├───────┼───┼───┼───┼───┼───┤
-│ Blare │ B │ L │ A │ R │ E │
-├───────┼───┼───┼───┼───┼───┤
-│   5   │   │   │   │   │   │
-├───────┼───┼───┼───┼───┼───┤
-│   6   │   │   │   │   │   │
-└───────┴───┴───┴───┴───┴───┘
-Today's wordle is: BLARE
+==============
+Today's Wordle
+==============
+
+Below should be (if everything is working correctly) the Wordle for today:
