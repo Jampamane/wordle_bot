@@ -113,9 +113,10 @@ class Wordle():
             self.action_chains = ActionChains(self.browser)
 
             self.browser.get(self.NYT_WEBSITE)
-            play = WebDriverWait(self.browser, 10).until(
+            WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((
                 By.CLASS_NAME, self.PLAY_BUTTON_CLASS)))
+            play = self.browser.find_elements(By.CLASS_NAME, self.PLAY_BUTTON_CLASS)[-1]
             play.click()
             time.sleep(1)
             self.action_chains.send_keys(Keys.ESCAPE).perform()
