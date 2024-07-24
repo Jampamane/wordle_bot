@@ -1,6 +1,8 @@
 name: documentation
 
-on: 
+on:
+  push:
+    - branch: main
   schedule:
     - cron: "30 0 * * *"
 
@@ -21,6 +23,7 @@ jobs:
           python main.py
       - name: Sphinx build
         run: |
+          sphinx-apidoc -f -o docs/source $GITHUB_WORKSPACE
           sphinx-build docs/source docs/build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
