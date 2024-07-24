@@ -12,4 +12,5 @@ Welcome to Wordle Bot's documentation!
    about
    final_table
    documentation
+   modules
 
