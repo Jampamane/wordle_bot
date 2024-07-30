@@ -1,4 +1,5 @@
 """Wordle Module, connects to and plays Wordle"""
+
 import time
 import json
 import random
@@ -19,13 +20,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class Wordle():
+class Wordle:
     """
     Handles all the logic for connecting to NYT website and playing Wordle.
 
     Raises:
-        ValueError: 
-            Will raise a value error if you provide an 
+        ValueError:
+            Will raise a value error if you provide an
             invalid first guess when using Wordle.solve().
 
     Args:
@@ -35,6 +36,7 @@ class Wordle():
             it will build a dynamic table in the console.
             Defaults to False.
     """
+
     NYT_WEBSITE = "https://www.nytimes.com/games/wordle/index.html"
     PLAY_BUTTON_CLASS = "Welcome-module_button__ZG0Zh"
     CLOSE_POPUP_CLASS = "Modal-module_closeIconButton__y9b6c"
@@ -46,76 +48,85 @@ class Wordle():
     CSS_PRESENT = ".Tile-module_tile__UWEHN[data-state=present]"
     ABSOLUTE_PATH = os.path.dirname(__file__)
     FIVE_LETTER_WORDS_RELATIVE_PATH = "five_letter_words.json"
-    FIVE_LETTER_WORDS_ABSOLUTE_PATH = os.path.join(ABSOLUTE_PATH, FIVE_LETTER_WORDS_RELATIVE_PATH)
-
+    FIVE_LETTER_WORDS_ABSOLUTE_PATH = os.path.join(
+        ABSOLUTE_PATH, FIVE_LETTER_WORDS_RELATIVE_PATH
+    )
 
     def __init__(self, headless: bool = False) -> None:
         self.console = Console()
-        with self.console.status(
-            "Setting up Wordle..."
-        ):
-            with open(self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, 'r', encoding="utf-8") as file:
+        with self.console.status("Setting up Wordle..."):
+            with open(
+                self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, "r", encoding="utf-8"
+            ) as file:
                 self.five_letter_words = json.load(file)
             self.potential_words = self.five_letter_words
-            self.potential_letters = ["a", "b", "c", "d", "e", "f", "g" ,"h", "i", "j", "k", "l", "m",
-                                      "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+            self.potential_letters = [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f",
+                "g",
+                "h",
+                "i",
+                "j",
+                "k",
+                "l",
+                "m",
+                "n",
+                "o",
+                "p",
+                "q",
+                "r",
+                "s",
+                "t",
+                "u",
+                "v",
+                "w",
+                "x",
+                "y",
+                "z",
+            ]
             self.style_dict = {
                 "absent": "grey53",
                 "present": "yellow bold",
                 "correct": "green bold",
-                "tbd": "red"
-                }
+                "tbd": "red",
+            }
             self.wordle = {
                 "letters": {
-                    1 : {"correct": "", "incorrect": []},
-                    2 : {"correct": "", "incorrect": []},
-                    3 : {"correct": "", "incorrect": []},
-                    4 : {"correct": "", "incorrect": []},
-                    5 : {"correct": "", "incorrect": []}
+                    1: {"correct": "", "incorrect": []},
+                    2: {"correct": "", "incorrect": []},
+                    3: {"correct": "", "incorrect": []},
+                    4: {"correct": "", "incorrect": []},
+                    5: {"correct": "", "incorrect": []},
                 },
                 "absent_letters": [],
                 "present_letters": [],
                 "guess": {
-                    1: {
-                        "word": "",
-                        "letters": []
-                    },
-                    2: {
-                        "word": "",
-                        "letters": []
-                    },
-                    3: {
-                        "word": "",
-                        "letters": []
-                    },
-                    4: {
-                        "word": "",
-                        "letters": []
-                    },
-                    5: {
-                        "word": "",
-                        "letters": []
-                    },
-                    6: {
-                        "word": "",
-                        "letters": []
-                    }
-                }
+                    1: {"word": "", "letters": []},
+                    2: {"word": "", "letters": []},
+                    3: {"word": "", "letters": []},
+                    4: {"word": "", "letters": []},
+                    5: {"word": "", "letters": []},
+                    6: {"word": "", "letters": []},
+                },
             }
             options = Options()
-            options.add_experimental_option('excludeSwitches', ['enable-logging'])
-            options.add_argument('--log-level=3')
+            options.add_experimental_option("excludeSwitches", ["enable-logging"])
+            options.add_argument("--log-level=3")
             if headless is True:
-                options.add_argument('--headless')
-            options.add_argument('--ignore-certificate-errors')
-            options.add_argument('--ignore-ssl-errors')
+                options.add_argument("--headless")
+            options.add_argument("--ignore-certificate-errors")
+            options.add_argument("--ignore-ssl-errors")
             self.browser = Chrome(options=options)
             self.action_chains = ActionChains(self.browser)
 
             self.browser.get(self.NYT_WEBSITE)
             WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((
-                By.CLASS_NAME, self.PLAY_BUTTON_CLASS)))
+                EC.presence_of_element_located((By.CLASS_NAME, self.PLAY_BUTTON_CLASS))
+            )
             play = self.browser.find_elements(By.CLASS_NAME, self.PLAY_BUTTON_CLASS)[-1]
             play.click()
             time.sleep(1)
@@ -124,7 +135,6 @@ class Wordle():
 
             last_row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[5]
             self.action_chains.scroll_to_element(last_row).perform()
-
 
     @property
     def wordle_today(self) -> str:
@@ -136,28 +146,28 @@ class Wordle():
             str: Today's wordle.
         """
         return str(
-            self.wordle['letters'][1]['correct'] +
-            self.wordle['letters'][2]['correct'] +
-            self.wordle['letters'][3]['correct'] +
-            self.wordle['letters'][4]['correct'] +
-            self.wordle['letters'][5]['correct'])
-
+            self.wordle["letters"][1]["correct"]
+            + self.wordle["letters"][2]["correct"]
+            + self.wordle["letters"][3]["correct"]
+            + self.wordle["letters"][4]["correct"]
+            + self.wordle["letters"][5]["correct"]
+        )
 
     def build_layout(self, guess="", style="yellow") -> Layout:
         """
-        Dynamically build the layout in the console so 
+        Dynamically build the layout in the console so
         the user can see how the wordle is being solved.
 
         Args:
-            guess (str, optional): 
+            guess (str, optional):
                 The 5 letter word that is being guessed. Defaults to "".
-            style (str, optional): 
+            style (str, optional):
                 The color that the guess will be displayed as. Defaults to "yellow".
 
         Returns:
             Layout: Layout object for displaying wordle.
         """
-        
+
         print_guess = False
         table = Table(title="Wordle", show_header=False)
         table.add_column("Guess", width=5, justify="center")
@@ -169,12 +179,12 @@ class Wordle():
         for x in range(1, 7):
             if self.wordle["guess"][x]["letters"]:
                 table.add_row(
-                    self.wordle['guess'][x]['word'].capitalize(),
-        f"[{self.wordle['guess'][x]['letters'][0][1]}]{self.wordle['guess'][x]['letters'][0][0]}",
-        f"[{self.wordle['guess'][x]['letters'][1][1]}]{self.wordle['guess'][x]['letters'][1][0]}",
-        f"[{self.wordle['guess'][x]['letters'][2][1]}]{self.wordle['guess'][x]['letters'][2][0]}",
-        f"[{self.wordle['guess'][x]['letters'][3][1]}]{self.wordle['guess'][x]['letters'][3][0]}",
-        f"[{self.wordle['guess'][x]['letters'][4][1]}]{self.wordle['guess'][x]['letters'][4][0]}"
+                    self.wordle["guess"][x]["word"].capitalize(),
+                    f"[{self.wordle['guess'][x]['letters'][0][1]}]{self.wordle['guess'][x]['letters'][0][0]}",
+                    f"[{self.wordle['guess'][x]['letters'][1][1]}]{self.wordle['guess'][x]['letters'][1][0]}",
+                    f"[{self.wordle['guess'][x]['letters'][2][1]}]{self.wordle['guess'][x]['letters'][2][0]}",
+                    f"[{self.wordle['guess'][x]['letters'][3][1]}]{self.wordle['guess'][x]['letters'][3][0]}",
+                    f"[{self.wordle['guess'][x]['letters'][4][1]}]{self.wordle['guess'][x]['letters'][4][0]}",
                 )
                 table.add_section()
             elif not guess:
@@ -189,28 +199,23 @@ class Wordle():
                 table.add_section()
 
         letters = Table(show_header=False, show_lines=False, show_edge=False)
-        letters.add_row(f"Total potential words: [cyan bold]{len(self.potential_words.keys())}")
+        letters.add_row(
+            f"Total potential words: [cyan bold]{len(self.potential_words.keys())}"
+        )
         words = Table(show_header=False, show_lines=False, show_edge=False)
         words.add_row(str(self.potential_letters))
         words.add_section()
         words.add_row(str(list(self.potential_words.keys())))
 
         layout = Layout()
-        layout.split_row(
-            Layout(name="table"),
-            Layout(name="info")
-        )
-        layout["info"].split_column(
-            Layout(name="letters"),
-            Layout(name="words")
-        )
+        layout.split_row(Layout(name="table"), Layout(name="info"))
+        layout["info"].split_column(Layout(name="letters"), Layout(name="words"))
         layout["table"].size = 33
         layout["letters"].size = 3
         layout["table"].update(Panel(table))
         layout["letters"].update(Panel(letters))
         layout["words"].update(Panel(words))
         return layout
-
 
     def _submit_guess(self, guess: str, row_number: int) -> bool:
         """Submits the guess to NYT Wordle.
@@ -239,7 +244,6 @@ class Wordle():
                 return False
         return True
 
-
     def _is_letter_duplicate(self, letter: str, word: str) -> bool:
         """Checks if a given letter shows up more than once in a word.
 
@@ -258,7 +262,6 @@ class Wordle():
             return True
         return False
 
-
     def _totally_absent(self, row_number: int, letter: str) -> bool:
         row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[row_number - 1]
         tiles = row.find_elements(By.CLASS_NAME, self.TILE_CLASS)
@@ -268,7 +271,6 @@ class Wordle():
                     return False
         return True
 
-
     def _update_wordle(self, row_number: int, word: str) -> None:
         self.wordle["guess"][row_number]["word"] = word
         row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[row_number - 1]
@@ -276,9 +278,19 @@ class Wordle():
         for indx, letter in enumerate(tiles, start=1):
             letter_check = letter.get_attribute("data-state")
             if letter_check == "absent":
-                if self._is_letter_duplicate(letter=letter.text.lower(), word=word) is True:
-                    if self._totally_absent(row_number=row_number, letter=letter.text.lower()) is False:
-                        self.wordle["letters"][indx]["incorrect"].append(letter.text.lower())
+                if (
+                    self._is_letter_duplicate(letter=letter.text.lower(), word=word)
+                    is True
+                ):
+                    if (
+                        self._totally_absent(
+                            row_number=row_number, letter=letter.text.lower()
+                        )
+                        is False
+                    ):
+                        self.wordle["letters"][indx]["incorrect"].append(
+                            letter.text.lower()
+                        )
                     else:
                         self.wordle["absent_letters"].append(letter.text.lower())
                 else:
@@ -294,14 +306,12 @@ class Wordle():
                 (letter.text, self.style_dict[letter_check])
             )
 
-
     def _check_for_present_letters(self, word):
-        if self.wordle['present_letters']:
-            for present_letter in self.wordle['present_letters']:
+        if self.wordle["present_letters"]:
+            for present_letter in self.wordle["present_letters"]:
                 if present_letter not in word:
                     return False
         return True
-
 
     def _get_potential_words(self):
         potential_words = {}
@@ -310,29 +320,27 @@ class Wordle():
                 continue
 
             for indx, letter in enumerate(word, start=1):
-                if letter in self.wordle['absent_letters']:
+                if letter in self.wordle["absent_letters"]:
                     break
-                if letter in self.wordle['letters'][indx]['incorrect']:
+                if letter in self.wordle["letters"][indx]["incorrect"]:
                     break
 
-                if not self.wordle['letters'][indx]['correct']:
+                if not self.wordle["letters"][indx]["correct"]:
                     pass
-                elif letter != self.wordle['letters'][indx]['correct']:
+                elif letter != self.wordle["letters"][indx]["correct"]:
                     break
 
                 if indx == 5:
                     potential_words[word] = 1
         return potential_words
 
-
     def _check_for_win(self, check_word: str):
         for indx in range(1, 6):
-            if not self.wordle['letters'][indx]['correct']:
+            if not self.wordle["letters"][indx]["correct"]:
                 return False
         if check_word != self.wordle_today:
             return False
         return True
-
 
     def _delete_guess(self, guess: str):
         for _ in range(5):
@@ -348,9 +356,8 @@ class Wordle():
         except KeyError:
             pass
 
-        with open(self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, 'w', encoding="utf-8") as file:
+        with open(self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, "w", encoding="utf-8") as file:
             file.write(json.dumps(self.five_letter_words, indent=1))
-
 
     def _get_available_letters(self) -> dict:
         availible_letters = {}
@@ -366,10 +373,9 @@ class Wordle():
         self.potential_letters = list(availible_letters.keys())
         return availible_letters
 
-
     def _get_best_guess(self, score: int = 5) -> str:
         """
-        Generates a list of best guesses based on the remaining 
+        Generates a list of best guesses based on the remaining
         letters from the list of potential remaining words.
 
         Args:
@@ -380,7 +386,7 @@ class Wordle():
 
         Returns:
             guess (str):
-                Random guess for the list of potential guesses. 
+                Random guess for the list of potential guesses.
         """
         best_guesses = []
         availible_letters = self._get_available_letters()
@@ -408,24 +414,22 @@ class Wordle():
                     if word_score == score:
                         best_guesses.append(word)
         if len(best_guesses) == 0:
-            guess = self._get_best_guess(score=score-1)
+            guess = self._get_best_guess(score=score - 1)
         else:
             guess = random.choice(best_guesses)
         return guess
 
-
     def _close_popups(self) -> None:
         """Closes the popups when done solving the Wordle."""
         WebDriverWait(self.browser, 5).until(
-        EC.presence_of_element_located((
-            By.CLASS_NAME, self.CLOSE_POPUP_CLASS))).click()
+            EC.presence_of_element_located((By.CLASS_NAME, self.CLOSE_POPUP_CLASS))
+        ).click()
         time.sleep(0.5)
         WebDriverWait(self.browser, 5).until(
-        EC.presence_of_element_located((
-            By.CLASS_NAME, self.CLOSE_POPUP_CLASS))).click()
+            EC.presence_of_element_located((By.CLASS_NAME, self.CLOSE_POPUP_CLASS))
+        ).click()
 
-
-    def solve(self, first_guess: str="") -> bool:
+    def solve(self, first_guess: str = "") -> bool:
         """Solve the wordle by selecting random 'best guesses'.
 
         Args:
@@ -434,7 +438,7 @@ class Wordle():
                 If blank, will just pick a random word. Defaults to "".
 
         Raises:
-            ValueError: 
+            ValueError:
                 Will raise a ValueError if provided an invalid first guess.
 
         Returns:
@@ -475,7 +479,12 @@ class Wordle():
 
         self._close_popups()
         if self._check_for_win(new_guess) is True:
-            self.console.print(f"Today's wordle is: [green bold]{self.wordle_today.upper()}", justify="center")
+            self.console.print(
+                f"Today's wordle is: [green bold]{self.wordle_today.upper()}",
+                justify="center",
+            )
             return True
-        self.console.print("Looks like the bot failed wordle today...", justify="center")
+        self.console.print(
+            "Looks like the bot failed wordle today...", justify="center"
+        )
         return False
