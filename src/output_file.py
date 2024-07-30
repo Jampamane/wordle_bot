@@ -5,9 +5,12 @@ from wordle import Wordle
 
 
 def output_file(wordle: Wordle):
-    ABSOLUTE_PATH = os.path.dirname(__file__)
+    FINAL_TABLE_ABSOLUTE_PATH = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
+        "docs/source/final_table.rst",
+    )
     with open(
-        os.path.join(ABSOLUTE_PATH, "docs/source/final_table.rst"),
+        FINAL_TABLE_ABSOLUTE_PATH,
         "a",
         encoding="utf-8",
     ) as file:
