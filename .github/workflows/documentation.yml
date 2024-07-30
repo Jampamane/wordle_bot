@@ -21,10 +21,10 @@ jobs:
           pip install -r requirements.txt
       - name: Play Wordle
         run: |
-          python main.py --export
+          python $GITHUB_WORKSPACE/src/main.py --export
       - name: Sphinx build
         run: |
-          sphinx-apidoc -f -o docs/source /
+          sphinx-apidoc -f -o docs/source $GITHUB_WORKSPACE/src
           sphinx-build docs/source docs/build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
