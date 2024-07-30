@@ -46,8 +46,10 @@ class Wordle:
     CSS_ABSENT = ".Tile-module_tile__UWEHN[data-state=absent]"
     CSS_CORRECT = ".Tile-module_tile__UWEHN[data-state=correct]"
     CSS_PRESENT = ".Tile-module_tile__UWEHN[data-state=present]"
-    ABSOLUTE_PATH = os.path.dirname(__file__)
-    FIVE_LETTER_WORDS_ABSOLUTE_PATH = os.path.abspath("wordle_bot/five_letter_words.json")
+    FIVE_LETTER_WORDS_ABSOLUTE_PATH = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
+        "five_letter_words.json",
+    )
 
     def __init__(self, headless: bool = False) -> None:
         self.console = Console()
