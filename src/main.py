@@ -5,8 +5,17 @@ from wordle import Wordle
 from output_file import output_file
 
 
-def main(export):
-    """Create a wordle class and calls the solve method."""
+def main(export: bool) -> None:
+    """
+    Create a wordle class and calls the solve method.
+
+    Args:
+        export (bool):
+            Bool that determines weather to export Wordle to docs/source/final_table.rst.
+            Defaults to False.
+            Can specify True when calling main function from the command line with --export.
+            Example: python wordle_bot/src/main.py --export
+    """
     # Solve wordle
     wordle = Wordle(headless=True)
     wordle.solve()

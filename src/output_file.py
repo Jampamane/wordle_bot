@@ -4,7 +4,13 @@ from datetime import date
 from wordle import Wordle
 
 
-def output_file(wordle: Wordle):
+def output_file(wordle: Wordle) -> None:
+    """Exports wordle to docs/source/final_table.rst.
+
+    Args:
+        wordle (Wordle):
+            Wordle object used for the data in exporting.
+    """
     FINAL_TABLE_ABSOLUTE_PATH = os.path.join(
         os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
         "docs/source/final_table.rst",
