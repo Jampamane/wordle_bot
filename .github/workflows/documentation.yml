@@ -24,7 +24,7 @@ jobs:
           python main.py --export
       - name: Sphinx build
         run: |
-          sphinx-apidoc -f -o docs/source $GITHUB_WORKSPACE/wordle_bot
+          sphinx-apidoc -f -o docs/source /
           sphinx-build docs/source docs/build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
