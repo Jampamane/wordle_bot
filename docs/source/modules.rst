@@ -1,5 +1,5 @@
-wordle_bot
-==========
+src
+===
 
 .. toctree::
    :maxdepth: 4
