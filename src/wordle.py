@@ -254,8 +254,8 @@ class Wordle:
             bool: True if duplicate, False if otherwise.
         """
         count = 0
-        for l in word:
-            if l == letter:
+        for word_letter in word:
+            if word_letter == letter:
                 count += 1
         if count > 1:
             return True
@@ -264,9 +264,9 @@ class Wordle:
     def _totally_absent(self, row_number: int, letter: str) -> bool:
         row = self.browser.find_elements(By.CLASS_NAME, self.ROW_CLASS)[row_number - 1]
         tiles = row.find_elements(By.CLASS_NAME, self.TILE_CLASS)
-        for l in tiles:
-            if l.text.lower() == letter:
-                if l.get_attribute("data-state") != "absent":
+        for tile_letter in tiles:
+            if tile_letter.text.lower() == letter:
+                if tile_letter.get_attribute("data-state") != "absent":
                     return False
         return True
 
@@ -407,8 +407,8 @@ class Wordle:
 
                 if index == 5:
                     word_score = 0
-                    for l in availible_letters:
-                        if l in word:
+                    for availible_letter in availible_letters:
+                        if availible_letter in word:
                             word_score += 1
                     if word_score == score:
                         best_guesses.append(word)

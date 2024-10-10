@@ -1,8 +1,10 @@
-from multiprocessing import Process
 from wordle import Wordle
+from multiprocessing import Process
 
 
-def wordle_child(x: str=None, y: str=None, width: str=None, height: str=None) -> None:
+def wordle_child(
+    x: str = None, y: str = None, width: str = None, height: str = None
+) -> None:
     """
     A multiprocess child object that will create a chrome instance and play wordle.
 
@@ -64,4 +66,3 @@ def wordle_multiprocess() -> None:
     p2.join()
     p3.join()
     p4.join()
-
