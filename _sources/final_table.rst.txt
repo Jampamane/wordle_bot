@@ -1,0 +1,48 @@
+==============
+Today's Wordle
+==============
+
+Below is today's wordle, and how it was solved:
+
+.. list-table:: Wordle for 2024-10-18
+   :widths: 10 3 3 3 3 3
+   :header-rows: 0
+   :align: left
+
+   * - Embed
+     - E
+     - M
+     - B
+     - E
+     - D
+   * - Torus
+     - T
+     - O
+     - R
+     - U
+     - S
+   * - Fawny
+     - F
+     - A
+     - W
+     - N
+     - Y
+   * - Glisk
+     - G
+     - L
+     - I
+     - S
+     - K
+   * - Stint
+     - S
+     - T
+     - I
+     - N
+     - T
+   * - 
+     - 
+     - 
+     - 
+     - 
+     -
+Today's wordle is: STINT
