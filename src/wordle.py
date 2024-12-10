@@ -127,11 +127,15 @@ class Wordle:
 
             # ----------------------------------------------------------------------------------
             # NEW YORK TIMES "WE'VE UPDATED OUR TERMS OF SERVICE" BUTTON
-            try: 
+            try:
                 WebDriverWait(self.browser, 10).until(
-                    EC.presence_of_element_located((By.CLASS_NAME, "purr-blocker-card__button"))
+                    EC.presence_of_element_located(
+                        (By.CLASS_NAME, "purr-blocker-card__button")
+                    )
                 )
-                self.browser.find_element(By.CLASS_NAME, "purr-blocker-card__button").click()
+                self.browser.find_element(
+                    By.CLASS_NAME, "purr-blocker-card__button"
+                ).click()
             except TimeoutException:
                 pass
             # -----------------------------------------------------------------------------------
