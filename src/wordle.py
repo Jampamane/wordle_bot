@@ -18,6 +18,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class Wordle:
@@ -123,6 +124,18 @@ class Wordle:
             self.action_chains = ActionChains(self.browser)
 
             self.browser.get(self.NYT_WEBSITE)
+
+            # ----------------------------------------------------------------------------------
+            # NEW YORK TIMES "WE'VE UPDATED OUR TERMS OF SERVICE" BUTTON
+            try: 
+                WebDriverWait(self.browser, 10).until(
+                    EC.presence_of_element_located((By.CLASS_NAME, "purr-blocker-card__button"))
+                )
+                self.browser.find_element(By.CLASS_NAME, "purr-blocker-card__button").click()
+            except TimeoutException:
+                pass
+            # -----------------------------------------------------------------------------------
+
             WebDriverWait(self.browser, 10).until(
                 EC.presence_of_element_located((By.CLASS_NAME, self.PLAY_BUTTON_CLASS))
             )
