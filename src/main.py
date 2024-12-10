@@ -18,7 +18,7 @@ def main(export: bool) -> None:
     """
     # Solve wordle
     for _ in range(5):  # Attempts to solve wordle 5 times in case it fails
-        wordle = Wordle(headless=False)
+        wordle = Wordle(headless=True)
         solved = wordle.solve()
         if solved is True:
             break
