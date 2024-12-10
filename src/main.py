@@ -17,8 +17,11 @@ def main(export: bool) -> None:
             Example: python wordle_bot/src/main.py --export
     """
     # Solve wordle
-    wordle = Wordle(headless=True)
-    wordle.solve()
+    for _ in range(5): # Attempts to solve wordle 5 times in case it fails
+        wordle = Wordle(headless=False)
+        solved = wordle.solve()
+        if solved is True:
+            break
 
     if export is True:
         # Output to rst file
