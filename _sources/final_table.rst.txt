@@ -1,0 +1,48 @@
+==============
+Today's Wordle
+==============
+
+Below is today's wordle, and how it was solved:
+
+.. list-table:: Wordle for 2024-12-19
+   :widths: 10 3 3 3 3 3
+   :header-rows: 0
+   :align: left
+
+   * - Pends
+     - P
+     - E
+     - N
+     - D
+     - S
+   * - Glory
+     - G
+     - L
+     - O
+     - R
+     - Y
+   * - Scuft
+     - S
+     - C
+     - U
+     - F
+     - T
+   * - Stray
+     - S
+     - T
+     - R
+     - A
+     - Y
+   * - 
+     - 
+     - 
+     - 
+     - 
+     -
+   * - 
+     - 
+     - 
+     - 
+     - 
+     -
+Today's wordle is: STRAY
