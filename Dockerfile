@@ -26,4 +26,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8000
 
 # Default command to run the bot
-CMD ["python", "bot/wordle_bot.py"]
+CMD ["python", "src/main.py"]
