@@ -8,6 +8,10 @@ RUN apt update && apt install -y \
     curl \
     chromium-driver \
     chromium \
+    libnss3 \
+    libgconf-2-4 \
+    libxi6 \
+    libgbm1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Set environment variables
