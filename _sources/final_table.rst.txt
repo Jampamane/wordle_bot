@@ -1,0 +1,48 @@
+==============
+Today's Wordle
+==============
+
+Below is today's wordle, and how it was solved:
+
+.. list-table:: Wordle for 2025-01-04
+   :widths: 10 3 3 3 3 3
+   :header-rows: 0
+   :align: left
+
+   * - Poulp
+     - P
+     - O
+     - U
+     - L
+     - P
+   * - Ahind
+     - A
+     - H
+     - I
+     - N
+     - D
+   * - Zymes
+     - Z
+     - Y
+     - M
+     - E
+     - S
+   * - Clear
+     - C
+     - L
+     - E
+     - A
+     - R
+   * - Felix
+     - F
+     - E
+     - L
+     - I
+     - X
+   * - Relax
+     - R
+     - E
+     - L
+     - A
+     - X
+Today's wordle is: RELAX
