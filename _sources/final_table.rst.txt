@@ -1,0 +1,48 @@
+==============
+Today's Wordle
+==============
+
+Below is today's wordle, and how it was solved:
+
+.. list-table:: Wordle for 2025-02-05
+   :widths: 10 3 3 3 3 3
+   :header-rows: 0
+   :align: left
+
+   * - Daric
+     - D
+     - A
+     - R
+     - I
+     - C
+   * - Vealy
+     - V
+     - E
+     - A
+     - L
+     - Y
+   * - Pedal
+     - P
+     - E
+     - D
+     - A
+     - L
+   * - 
+     - 
+     - 
+     - 
+     - 
+     -
+   * - 
+     - 
+     - 
+     - 
+     - 
+     -
+   * - 
+     - 
+     - 
+     - 
+     - 
+     -
+Today's wordle is: PEDAL
