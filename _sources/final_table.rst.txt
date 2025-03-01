@@ -1,0 +1,48 @@
+==============
+Today's Wordle
+==============
+
+Below is today's wordle, and how it was solved:
+
+.. list-table:: Wordle for 2025-03-01
+   :widths: 10 3 3 3 3 3
+   :header-rows: 0
+   :align: left
+
+   * - Rotta
+     - R
+     - O
+     - T
+     - T
+     - A
+   * - Wicky
+     - W
+     - I
+     - C
+     - K
+     - Y
+   * - Brume
+     - B
+     - R
+     - U
+     - M
+     - E
+   * - Lehrs
+     - L
+     - E
+     - H
+     - R
+     - S
+   * - Haver
+     - H
+     - A
+     - V
+     - E
+     - R
+   * - Hover
+     - H
+     - O
+     - V
+     - E
+     - R
+Today's wordle is: HOVER
