@@ -1,11 +1,11 @@
 """Main function that handles creating an instance and solving wordle."""
 
 from argparse import ArgumentParser
-from wordle import Wordle
-from output_file import output_file
+from .wordle import Wordle
+from .output_file import output_file
 
 
-def main(export: bool) -> None:
+def main(export: bool = False) -> None:
     """
     Create a wordle class and calls the solve method.
 

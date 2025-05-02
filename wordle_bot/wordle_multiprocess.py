@@ -1,4 +1,4 @@
-from wordle import Wordle
+from .wordle import Wordle
 from multiprocessing import Process
 
 
@@ -20,7 +20,7 @@ def wordle_child(
     wordle.solve()
 
 
-def wordle_multiprocess() -> None:
+def process() -> None:
     """Will create 4 child objects. Assumes the monitor is 1920x1080."""
     p1 = Process(
         target=wordle_child,

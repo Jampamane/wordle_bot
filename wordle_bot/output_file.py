@@ -1,7 +1,7 @@
 import os
 from rich.console import Console
 from datetime import date
-from wordle import Wordle
+from .wordle import Wordle
 
 
 def output_file(wordle: Wordle) -> None:
