@@ -601,8 +601,9 @@ wheels = [
 [[package]]
 name = "wordle-bot"
 version = "0.1.0"
-source = { editable = "." }
+source = { virtual = "." }
 dependencies = [
+    { name = "requests" },
     { name = "rich" },
     { name = "selenium" },
 ]
@@ -614,6 +615,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "requests", specifier = ">=2.32.3" },
     { name = "rich", specifier = ">=14.0.0" },
     { name = "selenium", specifier = ">=4.31.0" },
 ]

@@ -4,6 +4,7 @@ import time
 import json
 import random
 import os
+import requests
 
 from rich.live import Live
 from rich.table import Table
@@ -54,10 +55,15 @@ class Wordle:
     def __init__(self, headless: bool = False) -> None:
         self.console = Console()
         with self.console.status("Setting up Wordle..."):
-            with open(
-                self.FIVE_LETTER_WORDS_ABSOLUTE_PATH, "r", encoding="utf-8"
-            ) as file:
-                self.five_letter_words = json.load(file)
+            try:
+                response = requests.get("https://raw.githubusercontent.com/Jampamane/wordle_bot/refs/heads/main/five_letter_words.json")
+                response.raise_for_status()
+                self.five_letter_words = response.json()
+            except requests.RequestException as e:
+                print("Error fetching data:", e)
+            except ValueError as e:
+                print("Error decoding JSON:", e)
+
             self.potential_words = self.five_letter_words
             self.potential_letters = [
                 "a",
