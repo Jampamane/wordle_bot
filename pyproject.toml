@@ -11,19 +11,9 @@ dependencies = [
 
 [project.scripts]
 wordle-bot = "wordle_bot.main:main"
-wordle-bot-4 = "wordle_bot.wordle_multiprocess:process"
+wordle-bot-multi = "wordle_bot.wordle_multiprocess:process"
 
 [dependency-groups]
 dev = [
     "mkdocs-material>=9.6.12",
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build]
-include = [
-  "wordle_bot/five_letter_words.json"
-]
-
