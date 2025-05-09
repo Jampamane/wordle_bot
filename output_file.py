@@ -1,7 +1,7 @@
 import os
 from rich.console import Console
 from datetime import date
-from .wordle import Wordle
+from .wordle_bot.wordle import Wordle
 
 
 def output_file(wordle: Wordle) -> None:
@@ -11,10 +11,7 @@ def output_file(wordle: Wordle) -> None:
         wordle (Wordle):
             Wordle object used for the data in exporting.
     """
-    FINAL_TABLE_ABSOLUTE_PATH = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
-        "docs/source/final_table.rst",
-    )
+    FINAL_TABLE_ABSOLUTE_PATH = os.path.join(os.getenv("$GITHUB_WORKSPACE"), "docs/final_table.md")
     with open(
         FINAL_TABLE_ABSOLUTE_PATH,
         "a",

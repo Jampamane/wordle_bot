@@ -1,1 +1,1 @@
-from .main import main as main
+from .__main__ import solve as solve

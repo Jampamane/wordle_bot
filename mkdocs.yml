@@ -1,0 +1,13 @@
+site_name: My Docs
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+
+nav:
+  - Home: index.md
+  - Today's Wordle: final_table.md
+  - Documentation: docs.md

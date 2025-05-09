@@ -11,12 +11,13 @@ dependencies = [
 ]
 
 [project.scripts]
-wordle-bot = "wordle_bot.main:main"
+wordle-bot = "wordle_bot.__main__:main"
 wordle-bot-multi = "wordle_bot.wordle_multiprocess:process"
 
 [dependency-groups]
 dev = [
     "mkdocs-material>=9.6.12",
+    "mkdocstrings[python]>=0.29.1",
 ]
 
 [tool.uv]
