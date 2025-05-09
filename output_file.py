@@ -1,16 +1,21 @@
 import os
 from rich.console import Console
 from datetime import date
-from .wordle_bot.wordle import Wordle
+from wordle_bot.wordle import Wordle
 
 
-def output_file(wordle: Wordle) -> None:
-    """Exports wordle to docs/source/final_table.rst.
+def main() -> None:
+    """Plays wordle, then exports wordle to docs/final_table.md.
 
     Args:
         wordle (Wordle):
             Wordle object used for the data in exporting.
     """
+
+    wordle = Wordle()
+
+    wordle.solve()
+
     FINAL_TABLE_ABSOLUTE_PATH = os.path.join(os.getenv("$GITHUB_WORKSPACE"), "docs/final_table.md")
     with open(
         FINAL_TABLE_ABSOLUTE_PATH,
@@ -59,3 +64,6 @@ def output_file(wordle: Wordle) -> None:
                 )
 
         final_table.print(f"Today's wordle is: {wordle.wordle_today.upper()}")
+
+if __name__ == "__main__":
+    main()
