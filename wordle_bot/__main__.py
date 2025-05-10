@@ -27,6 +27,7 @@ def solve(first_guess: str = "") -> None:
             break
 
     if os.getenv("$GITHUB_WORKSPACE"):
+        print("Looks like you're running this on GitHub!")
         output_file(wordle)
 
 
