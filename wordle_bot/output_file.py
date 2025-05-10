@@ -12,7 +12,7 @@ def output_file(wordle: Wordle) -> None:
             Wordle object used for the data in exporting.
     """
 
-    FINAL_TABLE_ABSOLUTE_PATH = os.path.join(os.getenv("$GITHUB_WORKSPACE"), "docs/final_table.md")
+    FINAL_TABLE_ABSOLUTE_PATH = os.path.join(os.getenv("GITHUB_WORKSPACE"), "docs/final_table.md")
     with open(
         FINAL_TABLE_ABSOLUTE_PATH,
         "a",
