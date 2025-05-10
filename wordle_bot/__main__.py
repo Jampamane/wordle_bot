@@ -1,9 +1,11 @@
 """Main function that handles creating an instance and solving wordle."""
 
 from .wordle import Wordle
+from .output_file import output_file
+import os
 
 
-def solve(first_guess: str = "") -> str:
+def solve(first_guess: str = "") -> None:
     """
     Solve the wordle by selecting random 'best guesses'.
 
@@ -16,8 +18,6 @@ def solve(first_guess: str = "") -> str:
             ValueError:
                 Will raise a ValueError if provided an invalid first guess.
 
-        Returns:
-            wordle_today (str): Today's wordle.
     """
     # Solve wordle
     for _ in range(5):  # Attempts to solve wordle 5 times in case it fails
@@ -26,7 +26,9 @@ def solve(first_guess: str = "") -> str:
         if solved is True:
             break
 
-    return wordle.wordle_today
+    if os.getenv("$GITHUB_WORKSPACE"):
+        output_file(wordle)
+
 
 
 if __name__ == "__main__":

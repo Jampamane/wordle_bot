@@ -4,17 +4,13 @@ from datetime import date
 from wordle_bot.wordle import Wordle
 
 
-def main() -> None:
+def output_file(wordle: Wordle) -> None:
     """Plays wordle, then exports wordle to docs/final_table.md.
 
     Args:
         wordle (Wordle):
             Wordle object used for the data in exporting.
     """
-
-    wordle = Wordle()
-
-    wordle.solve()
 
     FINAL_TABLE_ABSOLUTE_PATH = os.path.join(os.getenv("$GITHUB_WORKSPACE"), "docs/final_table.md")
     with open(
@@ -64,6 +60,3 @@ def main() -> None:
                 )
 
         final_table.print(f"Today's wordle is: {wordle.wordle_today.upper()}")
-
-if __name__ == "__main__":
-    main()
