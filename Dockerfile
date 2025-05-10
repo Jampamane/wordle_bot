@@ -1,7 +1,5 @@
-# Use the official Python slim image
-FROM python:3.11-slim
+FROM python:latest
 
-# Install system dependencies
 RUN apt update && apt install -y \
     wget \
     unzip \
@@ -14,20 +12,13 @@ RUN apt update && apt install -y \
     libgbm1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Set environment variables
 ENV PATH="/usr/bin:$PATH"
 
-# Set working directory
 WORKDIR /app
 
-# Copy project files
 COPY . .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install uv
+RUN uv sync
 
-# Expose port if necessary (e.g., Flask UI)
-EXPOSE 8000
-
-# Default command to run the bot
-CMD ["python", "src/main.py"]
+CMD ["uv", "run", "wordle-bot"]
