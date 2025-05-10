@@ -22,10 +22,7 @@ jobs:
           uv sync
       - name: Play Wordle
         run: |
-          ls
-          ls -l
-          ls -a
-          python3 $GITHUB_WORKSPACE/
+          python3 $GITHUB_WORKSPACE/wordle_bot/
       - name: mkdocs build
         run: |
           mkdocs build --site-dir site
