@@ -7,7 +7,5 @@ This project is my attempt to beat Wordle every day as efficiently as possible. 
 
 # Running with Docker
 ```
-  docker build -t wordle-bot .
-  docker run -it --name wordle-bot wordle-bot
-  docker start -ai wordle-bot
+  sudo docker run ghcr.io/jampamane/wordle_bot:latest
 ```
