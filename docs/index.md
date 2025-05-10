@@ -1,22 +1,5 @@
-# Welcome to MkDocs
+# Welcome to My Wordle Bot Project!
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This has been a long project in the making!
 
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
-
-
-::: wordle_bot.__main__
-    options:
-      show_source: true
+Wordle Bot is available as a package and runs every day in a GitHub runner.
