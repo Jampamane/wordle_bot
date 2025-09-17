@@ -5,7 +5,7 @@ This project is my attempt to beat Wordle every day as efficiently as possible. 
 - Github cron job to play Wordle every day and publish the results to a website.
 - A JSON word list of all of the valid 5 letter word guesses.
 
-# Running with Docker
-```
-  sudo docker run -it ghcr.io/jampamane/wordle_bot:latest
+## Running with Docker
+``` bash
+  sudo docker run -it --rm ghcr.io/jampamane/wordle_bot:latest
 ```

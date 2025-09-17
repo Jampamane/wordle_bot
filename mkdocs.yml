@@ -1,6 +1,8 @@
-site_name: My Docs
+site_name: Wordle Bot
 theme:
   name: material
+  palette:
+    scheme: slate
 
 plugins:
   - search
