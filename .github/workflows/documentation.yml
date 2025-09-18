@@ -22,7 +22,7 @@ jobs:
           uv sync
       - name: Play Wordle
         run: |
-          uv run wordle-bot
+          uv run wordle_bot
       - name: mkdocs build
         run: |
           uv run mkdocs build --site-dir site
