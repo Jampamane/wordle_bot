@@ -20,6 +20,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import SessionNotCreatedException
 
 
 class Wordle:
@@ -133,7 +134,15 @@ class Wordle:
                 options.add_argument("--headless")
             options.add_argument("--ignore-certificate-errors")
             options.add_argument("--ignore-ssl-errors")
-            self.browser = Chrome(options=options)
+
+            try:
+                self.browser = Chrome(options=options)
+            except SessionNotCreatedException as e:
+                self.console.print("Selenium web browser failed to start!", style="red")
+                self.console.print("You might be missing some dependencies.", style="red")
+                self.console.print("Selenium error: SessionNotCreatedException", style="yellow")
+                exit(3)
+
             self.action_chains = ActionChains(self.browser)
 
             self.browser.get(self.NYT_WEBSITE)

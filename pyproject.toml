@@ -11,8 +11,8 @@ dependencies = [
 ]
 
 [project.scripts]
-wordle-bot = "wordle_bot.__main__:solve"
-wordle-bot-multi = "wordle_bot.wordle_multiprocess:process"
+wordle_bot = "wordle_bot.__main__:solve"
+wordle_bot_multi = "wordle_bot.wordle_multiprocess:process"
 
 [dependency-groups]
 dev = [

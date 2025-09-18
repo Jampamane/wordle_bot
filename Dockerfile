@@ -7,7 +7,6 @@ RUN apt update && apt install -y \
     chromium-driver \
     chromium \
     libnss3 \
-    libgconf-2-4 \
     libxi6 \
     libgbm1 \
     && rm -rf /var/lib/apt/lists/*
@@ -21,4 +20,4 @@ COPY . .
 RUN pip install uv
 RUN uv sync
 
-CMD ["uv", "run", "wordle-bot"]
+CMD ["uv", "run", "wordle_bot"]
